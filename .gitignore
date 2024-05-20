@@ -1,0 +1,28 @@
+### direnv ###
+/.devenv
+/.direnv
+/.envrc
+
+### nix ###
+/result
+
+### pre-commit ###
+/.pre-commit-config.yaml
+# Created by https://www.toptal.com/developers/gitignore/api/terraform
+# Edit at https://www.toptal.com/developers/gitignore?templates=terraform
+
+### terraform ###
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+crash.*.log
+crash.log
+id_ed25519
+override.tf
+override.tf.json
+terraform.rc
