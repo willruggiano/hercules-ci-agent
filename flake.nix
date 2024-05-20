@@ -29,7 +29,7 @@
     nixpkgs,
     ...
   }:
-    flake-parts.lib.mkFlake {inherit inputs;} {
+    flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
       imports = [
         inputs.devenv.flakeModule
         inputs.hercules-ci-effects.flakeModule
@@ -89,6 +89,26 @@
           };
         };
 
+        effects = {branch, ...}:
+          withSystem "x86_64-linux" (
+            {
+              config,
+              hci-effects,
+              pkgs,
+              inputs',
+              ...
+            }: {
+              test = hci-effects.modularEffect ({pkgs, ...}: {
+                imports = [hci-effects.modules.git-auth];
+                inputs = [pkgs.hello];
+                effectScript = ''
+                  hello
+                  git status
+                '';
+              });
+            }
+          );
+
         nixosConfigurations.hercules-ci-agent = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
@@ -135,5 +155,5 @@
           ];
         };
       };
-    };
+    });
 }
